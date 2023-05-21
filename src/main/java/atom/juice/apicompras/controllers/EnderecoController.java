@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/endereco")
 public class EnderecoController {
 
-	@Autowired
-	EnderecoService service;
 
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Endereco findById(@PathVariable(value = "id") Long id) {
-		return service.findById(id);
-	}
-	
+    EnderecoService service;
+
+    @Autowired
+    public EnderecoController(EnderecoService service) {
+        this.service = service;
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Endereco findById(@PathVariable(value = "id") Long id) {
+        return service.findById(id);
+    }
+
 }

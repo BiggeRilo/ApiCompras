@@ -11,16 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class EnderecoService {
 
-	private Logger logger = Logger.getLogger(EnderecoService.class.getName());
+    private final Logger logger = Logger.getLogger(EnderecoService.class.getName());
 
-	@Autowired
-	EnderecoRepository repository;
+    EnderecoRepository repository;
 
-	public Endereco findById(Long id) {
-		logger.info("Buscando um Endereço!");
-		return repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
+    @Autowired
+    public EnderecoService(EnderecoRepository repository) {
+        this.repository = repository;
+    }
 
-	}
+    public Endereco findById(Long id) {
+        logger.info("Buscando um Endereço!");
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
+
+    }
 
 }

@@ -11,10 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompraProdutoService {
 
-	private Logger logger = Logger.getLogger(CompraProdutoService.class.getName());
+	private final Logger logger = Logger.getLogger(CompraProdutoService.class.getName());
 
-	@Autowired
 	CompraProdutoRepository repository;
+	@Autowired
+	public CompraProdutoService(CompraProdutoRepository repository){
+		this.repository = repository;
+	}
 
 	public CompraProduto findById(Long id) {
 		logger.info("Buscando produtos por compra!");

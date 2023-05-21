@@ -5,188 +5,188 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "CLIENTE")
 @DynamicInsert
 public class Cliente implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "nome", nullable = false)
-	private String nome;
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
-	@Column(name = "sobrenome", nullable = false)
-	private String sobreNome;
+    @Column(name = "sobrenome", nullable = false)
+    private String sobreNome;
 
-	@Column(name = "rg", unique = true)
-	private String rg;
+    @Column(name = "rg", unique = true)
+    private String rg;
 
-	@Column(name = "cpf", length = 11, unique = true)
-	private String cpf;
+    @Column(name = "cpf", length = 11, unique = true)
+    private String cpf;
 
-	@Column(name = "cnpj", length = 14, unique = true)
-	private String cnpj;
+    @Column(name = "cnpj", length = 14, unique = true)
+    private String cnpj;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_nascimento", nullable = false)
-	private Date dataNascimento;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_nascimento", nullable = false)
+    private Date dataNascimento;
 
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-	private List<Endereco> enderecos;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_criacao", nullable = false)
-	@CreationTimestamp
-	private Date dataCriacao;
+    @OneToMany(mappedBy = "cliente")
+    private List<Endereco> enderecos;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_ultima_modificacao")
-	@UpdateTimestamp
-	private Date dataUltimaModificacao;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_criacao", nullable = false)
+    @CreationTimestamp
+    private Date dataCriacao;
 
-	@Column(name = "status_db")
-	@ColumnDefault("false")
-	private Boolean statusDb;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_ultima_modificacao")
+    @UpdateTimestamp
+    private Date dataUltimaModificacao;
 
-	public Cliente() {
+    @Column(name = "status_db")
+    @ColumnDefault("false")
+    private Boolean statusDb;
 
-	}
+    public Cliente() {
 
-	public Cliente(Long id, String nome, String sobreNome, String rg, String cpf, String cnpj, Date dataNascimento) {
-		this.id = id;
-		this.nome = nome;
-		this.sobreNome = sobreNome;
-		this.rg = rg;
-		this.cpf = cpf;
-		this.cnpj = cnpj;
-		this.dataNascimento = dataNascimento;
-	}
+    }
 
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", rg=" + rg + ", cpf=" + cpf
-				+ ", cnpj=" + cnpj + ", dataNascimento=" + dataNascimento + ", dataCriacao=" + dataCriacao
-				+ ", dataUltimaModificacao=" + dataUltimaModificacao + ", statusDb=" + statusDb + "]";
-	}
+    public Cliente(Long id, String nome, String sobreNome, String rg, String cpf, String cnpj, Date dataNascimento) {
+        this.id = id;
+        this.nome = nome;
+        this.sobreNome = sobreNome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.cnpj = cnpj;
+        this.dataNascimento = dataNascimento;
+        this.statusDb = Boolean.FALSE;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cnpj, cpf, dataCriacao, dataNascimento, dataUltimaModificacao, id, nome, rg, sobreNome,
-				statusDb);
-	}
+    @Override
+    public String toString() {
+        return "Cliente [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", rg=" + rg + ", cpf=" + cpf
+                + ", cnpj=" + cnpj + ", dataNascimento=" + dataNascimento + ", dataCriacao=" + dataCriacao
+                + ", dataUltimaModificacao=" + dataUltimaModificacao + ", statusDb=" + statusDb + "]";
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		return Objects.equals(cnpj, other.cnpj) && Objects.equals(cpf, other.cpf)
-				&& Objects.equals(dataCriacao, other.dataCriacao)
-				&& Objects.equals(dataNascimento, other.dataNascimento)
-				&& Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao) && Objects.equals(id, other.id)
-				&& Objects.equals(nome, other.nome) && Objects.equals(rg, other.rg)
-				&& Objects.equals(sobreNome, other.sobreNome) && Objects.equals(statusDb, other.statusDb);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(cnpj, cpf, dataCriacao, dataNascimento, dataUltimaModificacao, id, nome, rg, sobreNome,
+                statusDb);
+    }
 
-	public Long getId() {
-		return id;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cliente other = (Cliente) obj;
+        return Objects.equals(cnpj, other.cnpj) && Objects.equals(cpf, other.cpf)
+                && Objects.equals(dataCriacao, other.dataCriacao)
+                && Objects.equals(dataNascimento, other.dataNascimento)
+                && Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao) && Objects.equals(id, other.id)
+                && Objects.equals(nome, other.nome) && Objects.equals(rg, other.rg)
+                && Objects.equals(sobreNome, other.sobreNome) && Objects.equals(statusDb, other.statusDb);
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getSobreNome() {
-		return sobreNome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setSobreNome(String sobreNome) {
-		this.sobreNome = sobreNome;
-	}
+    public String getSobreNome() {
+        return sobreNome;
+    }
 
-	public String getRg() {
-		return rg;
-	}
+    public void setSobreNome(String sobreNome) {
+        this.sobreNome = sobreNome;
+    }
 
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
+    public String getRg() {
+        return rg;
+    }
 
-	public String getCpf() {
-		return cpf;
-	}
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public String getCnpj() {
-		return cnpj;
-	}
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
+    public String getCnpj() {
+        return cnpj;
+    }
 
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
 
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
 
-	public Date getDataUltimaModificacao() {
-		return dataUltimaModificacao;
-	}
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
 
-	public void setDataUltimaModificacao(Date dataUltimaModificacao) {
-		this.dataUltimaModificacao = dataUltimaModificacao;
-	}
+    public Date getDataUltimaModificacao() {
+        return dataUltimaModificacao;
+    }
 
-	public Boolean isStatusDb() {
-		return statusDb;
-	}
+    public void setDataUltimaModificacao(Date dataUltimaModificacao) {
+        this.dataUltimaModificacao = dataUltimaModificacao;
+    }
 
-	public void setStatusDb(Boolean statusDb) {
-		this.statusDb = statusDb;
-	}
+    public Boolean isStatusDb() {
+        return statusDb;
+    }
+
+    public void setStatusDb(Boolean statusDb) {
+        this.statusDb = statusDb;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
 }

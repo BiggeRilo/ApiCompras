@@ -11,10 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoService {
 
-	private Logger logger = Logger.getLogger(ProdutoService.class.getName());
+	private final Logger logger = Logger.getLogger(ProdutoService.class.getName());
+
+	ProdutoRepository repository;
 
 	@Autowired
-	ProdutoRepository repository;
+	public  ProdutoService(ProdutoRepository repository){
+		this.repository = repository;
+	}
 
 	public Produto findById(Long id) {
 		logger.info("Buscando um Produto!");

@@ -3,6 +3,7 @@ package atom.juice.apicompras.controllers;
 import java.util.List;
 
 import atom.juice.apicompras.models.Cliente;
+import atom.juice.apicompras.models.Endereco;
 import atom.juice.apicompras.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,45 +22,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/cliente")
 public class ClienteController {
 
-	@Autowired
-	private ClienteService service;
+    ClienteService service;
 
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Cliente findById(@PathVariable(value = "id") Long id) {
-		return service.findById(id);
-	}
+    @Autowired
+    public ClienteController(ClienteService service) {
+        this.service = service;
+    }
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Cliente> findAll() {
-		return service.findAll();
-	}
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Cliente findById(@PathVariable(value = "id") Long id) {
+        return service.findById(id);
+    }
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Cliente create(@RequestBody Cliente cliente) {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Cliente> findAll() {
+        return service.findAll();
+    }
 
-		return service.create(cliente);
-	}
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Cliente create(@RequestBody Cliente cliente) {
 
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Cliente update(@RequestBody Cliente cliente) {
+        return service.create(cliente);
+    }
 
-		return service.update(cliente);
-	}
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Cliente update(@RequestBody Cliente cliente) {
 
-	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> disable(Long id) {
+        return service.update(cliente);
+    }
 
-		service.disable(id);
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> disable(@PathVariable(value = "id") Long id) {
 
-		return ResponseEntity.noContent().build();
+        service.disable(id);
 
-	}
+        return ResponseEntity.noContent().build();
 
-	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> delete(@PathVariable(value = "id") Long id) {
+    }
 
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> delete(@PathVariable(value = "id") Long id) {
+
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

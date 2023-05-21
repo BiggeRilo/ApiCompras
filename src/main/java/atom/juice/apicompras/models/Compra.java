@@ -5,11 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -48,7 +44,7 @@ public class Compra implements Serializable {
 	@OneToMany(mappedBy = "compra")
 	private List<CompraProduto> compraProduto;
 
-	@Column(name = "valorTotal", nullable = false)
+	@Column(name = "valor_total", nullable = false)
 	private Double valorTotal;
 
 	@Temporal(TemporalType.TIMESTAMP)

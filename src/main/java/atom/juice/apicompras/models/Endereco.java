@@ -4,28 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.*;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
 @Entity
 @Table(name = "ENDERECO")
+@DynamicInsert
 public class Endereco implements Serializable {
 
 	/**
@@ -37,9 +24,8 @@ public class Endereco implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne()
 	@JoinColumn(name = "cliente_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private Cliente cliente;
 
@@ -71,7 +57,7 @@ public class Endereco implements Serializable {
 	@UpdateTimestamp
 	private Date dataUltimaModificacao;
 
-	@Column(name = "status_db", nullable = false)
+	@Column(name = "status_db")
 	@ColumnDefault("false")
 	private Boolean statusDb;
 
@@ -94,6 +80,7 @@ public class Endereco implements Serializable {
 		this.estado = estado;
 		this.cidade = cidade;
 		this.complemento = complemento;
+		this.statusDb = false;
 	}
 
 	@Override
