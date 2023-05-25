@@ -2,7 +2,6 @@ package atom.juice.apicompras.services;
 
 import atom.juice.apicompras.mocks.MockCliente;
 import atom.juice.apicompras.models.Cliente;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

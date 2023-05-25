@@ -1,10 +1,8 @@
 package atom.juice.apicompras.mapper;
 
-import atom.juice.apicompras.data.vo.ClienteDTO;
-import atom.juice.apicompras.data.vo.EnderecoDTO;
+import atom.juice.apicompras.data.dto.ClienteDTO;
 import atom.juice.apicompras.mocks.MockCliente;
 import atom.juice.apicompras.models.Cliente;
-import atom.juice.apicompras.models.Endereco;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

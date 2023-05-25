@@ -1,4 +1,4 @@
-package atom.juice.apicompras.data.vo;
+package atom.juice.apicompras.data.dto;
 
 import atom.juice.apicompras.models.Cliente;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,32 +1,17 @@
 package atom.juice.apicompras.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
 @Entity
 @Table(name = "COMPRA_PRODUTO")
-public class CompraProduto implements Serializable {
+public class ItemCompra implements Serializable {
 
 	/**
 	 * 
@@ -72,12 +57,12 @@ public class CompraProduto implements Serializable {
 	@ColumnDefault("false")
 	private Boolean statusDb;
 
-	public CompraProduto() {
+	public ItemCompra() {
 
 	}
 
-	public CompraProduto(Long id, Double valorTotal, Double valorProdutoUnitarioCriacao, int quantidadeProduto,
-			Produto produto, Compra compra) {
+	public ItemCompra(Long id, Double valorTotal, Double valorProdutoUnitarioCriacao, int quantidadeProduto,
+					  Produto produto, Compra compra) {
 		this.id = id;
 		this.valorTotal = valorTotal;
 		this.valorProdutoUnitarioCriacao = valorProdutoUnitarioCriacao;
@@ -100,7 +85,7 @@ public class CompraProduto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CompraProduto other = (CompraProduto) obj;
+		ItemCompra other = (ItemCompra) obj;
 		return Objects.equals(compra, other.compra) && Objects.equals(dataCriacao, other.dataCriacao)
 				&& Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao) && Objects.equals(id, other.id)
 				&& Objects.equals(produto, other.produto) && quantidadeProduto == other.quantidadeProduto

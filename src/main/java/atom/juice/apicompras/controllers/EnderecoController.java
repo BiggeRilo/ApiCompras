@@ -1,6 +1,6 @@
 package atom.juice.apicompras.controllers;
 
-import atom.juice.apicompras.data.vo.EnderecoDTO;
+import atom.juice.apicompras.data.dto.EnderecoDTO;
 import atom.juice.apicompras.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

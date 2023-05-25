@@ -1,7 +1,6 @@
 package atom.juice.apicompras.controllers;
 
-import atom.juice.apicompras.data.vo.ClienteDTO;
-import atom.juice.apicompras.models.Cliente;
+import atom.juice.apicompras.data.dto.ClienteDTO;
 import atom.juice.apicompras.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

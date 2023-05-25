@@ -1,15 +1,15 @@
 package atom.juice.apicompras.models;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CLIENTE")

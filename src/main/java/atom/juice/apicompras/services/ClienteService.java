@@ -1,15 +1,13 @@
 package atom.juice.apicompras.services;
 
 
-import atom.juice.apicompras.data.vo.ClienteDTO;
-import atom.juice.apicompras.data.vo.EnderecoDTO;
+import atom.juice.apicompras.data.dto.ClienteDTO;
 import atom.juice.apicompras.exceptions.ResourceNotFoundException;
 import atom.juice.apicompras.mapper.ObjectMapperUtils;
 import atom.juice.apicompras.models.Cliente;
 import atom.juice.apicompras.models.Endereco;
 import atom.juice.apicompras.repositories.ClienteRepository;
 import atom.juice.apicompras.repositories.EnderecoRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

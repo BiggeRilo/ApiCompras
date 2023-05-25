@@ -1,7 +1,5 @@
 package atom.juice.apicompras.exceptions.handlers;
 
-import java.util.Date;
-
 import atom.juice.apicompras.exceptions.ExceptionResponse;
 import atom.juice.apicompras.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -10,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Date;
 
 @RestControllerAdvice
 public class CustomizedReponseEntityHandler extends ResponseEntityExceptionHandler {
