@@ -1,204 +1,223 @@
 package atom.juice.apicompras.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-
-import jakarta.persistence.*;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ENDERECO")
 @DynamicInsert
 public class Endereco implements Serializable {
 
-	/**
-	 * Generated serial UUID
-	 */
-	private static final long serialVersionUID = 6823588219082699682L;
+    /**
+     * Generated serial UUID
+     */
+    private static final long serialVersionUID = 6823588219082699682L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne()
-	@JoinColumn(name = "cliente_id", nullable = false)
-	@JsonIgnore
-	private Cliente cliente;
+    @ManyToOne()
+    @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonIgnore
+    private Cliente cliente;
 
-	@Column(name = "cep", nullable = false)
-	private String cep;
+    @Column(name = "cep", nullable = false)
+    private String cep;
 
-	@Column(name = "logradouro", nullable = false)
-	private String logradouro;
+    @Column(name = "logradouro", nullable = false)
+    private String logradouro;
 
-	@Column(name = "numero", nullable = false)
-	private String numero;
+    @Column(name = "numero", nullable = false)
+    private String numero;
 
-	@Column(name = "estado", nullable = false)
-	private String estado;
+    @Column(name = "estado", nullable = false)
+    private String estado;
 
-	@Column(name = "cidade", nullable = false)
-	private String cidade;
+    @Column(name = "cidade", nullable = false)
+    private String cidade;
 
-	@Column(name = "complemento", nullable = false)
-	private String complemento;
+    @Column(name = "complemento", nullable = false)
+    private String complemento;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_criacao", nullable = false)
-	@CreationTimestamp
-	private Date dataCriacao;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_criacao", nullable = false)
+    @CreationTimestamp
+    private Date dataCriacao;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_ultima_modificacao")
-	@UpdateTimestamp
-	private Date dataUltimaModificacao;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_ultima_modificacao")
+    @UpdateTimestamp
+    private Date dataUltimaModificacao;
 
-	@Column(name = "status_db")
-	@ColumnDefault("false")
-	private Boolean statusDb;
+    @Column(name = "status_db")
+    @ColumnDefault("false")
+    private Boolean statusDb;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cep, cidade, cliente, complemento, dataCriacao, dataUltimaModificacao, estado, id,
-				logradouro, numero, statusDb);
-	}
 
-	public Endereco() {
-	}
+    public Endereco() {
+    }
 
-	public Endereco(Long id, Cliente cliente, String cep, String logradouro, String numero, String estado,
-			String cidade, String complemento) {
-		this.id = id;
-		this.cliente = cliente;
-		this.cep = cep;
-		this.logradouro = logradouro;
-		this.numero = numero;
-		this.estado = estado;
-		this.cidade = cidade;
-		this.complemento = complemento;
-		this.statusDb = false;
-	}
+    public Endereco(Long id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		return Objects.equals(cep, other.cep) && Objects.equals(cidade, other.cidade)
-				&& Objects.equals(cliente, other.cliente) && Objects.equals(complemento, other.complemento)
-				&& Objects.equals(dataCriacao, other.dataCriacao)
-				&& Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao)
-				&& Objects.equals(estado, other.estado) && Objects.equals(id, other.id)
-				&& Objects.equals(logradouro, other.logradouro) && Objects.equals(numero, other.numero)
-				&& Objects.equals(statusDb, other.statusDb);
-	}
+    public Endereco(Long id, Cliente cliente, String cep, String logradouro, String numero, String estado,
+                    String cidade, String complemento) {
+        this.id = id;
+        this.cliente = cliente;
+        this.cep = cep;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.estado = estado;
+        this.cidade = cidade;
+        this.complemento = complemento;
+        this.statusDb = false;
+    }
 
-	@Override
-	public String toString() {
-		return "Endereco [id=" + id + ", cliente=" + cliente + ", cep=" + cep + ", logradouro=" + logradouro
-				+ ", numero=" + numero + ", estado=" + estado + ", cidade=" + cidade + ", complemento=" + complemento
-				+ ", dataCriacao=" + dataCriacao + ", dataUltimaModificacao=" + dataUltimaModificacao + ", statusDb="
-				+ statusDb + "]";
-	}
 
-	public Long getId() {
-		return id;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+        Endereco endereco = (Endereco) o;
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+        if (!id.equals(endereco.id)) return false;
+        if (!Objects.equals(cliente, endereco.cliente)) return false;
+        if (!Objects.equals(cep, endereco.cep)) return false;
+        if (!Objects.equals(logradouro, endereco.logradouro)) return false;
+        if (!Objects.equals(numero, endereco.numero)) return false;
+        if (!Objects.equals(estado, endereco.estado)) return false;
+        if (!Objects.equals(cidade, endereco.cidade)) return false;
+        if (!Objects.equals(complemento, endereco.complemento))
+            return false;
+        if (!Objects.equals(dataCriacao, endereco.dataCriacao))
+            return false;
+        if (!Objects.equals(dataUltimaModificacao, endereco.dataUltimaModificacao))
+            return false;
+        return Objects.equals(statusDb, endereco.statusDb);
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + cliente.hashCode();
+        result = 31 * result + cep.hashCode();
+        result = 31 * result + logradouro.hashCode();
+        result = 31 * result + numero.hashCode();
+        result = 31 * result + estado.hashCode();
+        result = 31 * result + cidade.hashCode();
+        result = 31 * result + complemento.hashCode();
+        result = 31 * result + dataCriacao.hashCode();
+        result = 31 * result + dataUltimaModificacao.hashCode();
+        result = 31 * result + statusDb.hashCode();
+        return result;
+    }
 
-	public String getCep() {
-		return cep;
-	}
+    @Override
+    public String toString() {
+        return "Endereco [id=" + id + ", cliente=" + cliente + ", cep=" + cep + ", logradouro=" + logradouro
+                + ", numero=" + numero + ", estado=" + estado + ", cidade=" + cidade + ", complemento=" + complemento
+                + ", dataCriacao=" + dataCriacao + ", dataUltimaModificacao=" + dataUltimaModificacao + ", statusDb="
+                + statusDb + "]";
+    }
 
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getLogradouro() {
-		return logradouro;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-	public String getNumero() {
-		return numero;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+    public String getCep() {
+        return cep;
+    }
 
-	public String getEstado() {
-		return estado;
-	}
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
+    public String getLogradouro() {
+        return logradouro;
+    }
 
-	public String getCidade() {
-		return cidade;
-	}
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
+    public String getNumero() {
+        return numero;
+    }
 
-	public String getComplemento() {
-		return complemento;
-	}
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
+    public String getEstado() {
+        return estado;
+    }
 
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
+    public String getCidade() {
+        return cidade;
+    }
 
-	public Date getDataUltimaModificacao() {
-		return dataUltimaModificacao;
-	}
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
 
-	public void setDataUltimaModificacao(Date dataUltimaModificacao) {
-		this.dataUltimaModificacao = dataUltimaModificacao;
-	}
+    public String getComplemento() {
+        return complemento;
+    }
 
-	public Boolean isStatusDb() {
-		return statusDb;
-	}
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
 
-	public void setStatusDb(Boolean statusDb) {
-		this.statusDb = statusDb;
-	}
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Date getDataUltimaModificacao() {
+        return dataUltimaModificacao;
+    }
+
+    public void setDataUltimaModificacao(Date dataUltimaModificacao) {
+        this.dataUltimaModificacao = dataUltimaModificacao;
+    }
+
+    public Boolean isStatusDb() {
+        return statusDb;
+    }
+
+    public void setStatusDb(Boolean statusDb) {
+        this.statusDb = statusDb;
+    }
+
 
 }

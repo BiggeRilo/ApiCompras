@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/comprasdb
+    url: jdbc:postgresql://localhost:5432/comprasdb?useTimezone=true&serverTimezone=UTC
     username: postgres
     password: postgres123
   jpa:
@@ -16,3 +16,11 @@ spring:
           sharedCache:
             mode: ALL
     show-sql: true
+  flyway:
+    url: jdbc:postgresql://localhost:5432/comprasdb
+    schemas: AtomJuice
+    user: postgres
+    password: postgres123
+  jackson:
+    time-zone: GMT-3
+    date-format: yyyy-MM-dd HH:mm:ss

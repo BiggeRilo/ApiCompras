@@ -1,27 +1,26 @@
 package atom.juice.apicompras.services;
 
-import atom.juice.apicompras.mocker.ClienteMocker;
+import atom.juice.apicompras.mocks.MockCliente;
 import atom.juice.apicompras.models.Cliente;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ClienteServiceTest {
 
-    final Cliente mockClient = ClienteMocker.mock();
+    static MockCliente inputObject;
+
+    @BeforeAll
+    static void init() {
+        inputObject = new MockCliente();
+    }
 
     @Test
     void disable() {
-        assertFalse(mockClient.isStatusDb());
-
-        mockClient.setStatusDb(Boolean.TRUE);
-
-        assertTrue(mockClient.isStatusDb());
-
+        Cliente entity = inputObject.mockEntity();
+        Assertions.assertFalse(entity.isStatusDb());
+        entity.setStatusDb(Boolean.TRUE);
+        Assertions.assertTrue(entity.isStatusDb());
     }
 }

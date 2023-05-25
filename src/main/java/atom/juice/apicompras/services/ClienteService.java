@@ -1,11 +1,15 @@
 package atom.juice.apicompras.services;
 
 
+import atom.juice.apicompras.data.vo.ClienteDTO;
+import atom.juice.apicompras.data.vo.EnderecoDTO;
 import atom.juice.apicompras.exceptions.ResourceNotFoundException;
+import atom.juice.apicompras.mapper.ObjectMapperUtils;
 import atom.juice.apicompras.models.Cliente;
 import atom.juice.apicompras.models.Endereco;
 import atom.juice.apicompras.repositories.ClienteRepository;
 import atom.juice.apicompras.repositories.EnderecoRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +21,11 @@ public class ClienteService {
 
     private final Logger logger = Logger.getLogger(ClienteService.class.getName());
 
-    ClienteRepository repository;
 
-    EnderecoRepository adressRepository;
+    private final ClienteRepository repository;
+
+    private final EnderecoRepository adressRepository;
+
 
     @Autowired
     public ClienteService(EnderecoRepository adressRepository, ClienteRepository repository) {
@@ -27,44 +33,44 @@ public class ClienteService {
         this.repository = repository;
     }
 
-    public Cliente findById(Long id) {
+    public ClienteDTO findById(Long id) {
         logger.info("Buscando um Cliente!");
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
 
+        return ObjectMapperUtils.map(entity, ClienteDTO.class);
     }
 
-    public List<Cliente> findAll() {
+    public List<ClienteDTO> findAll() {
 
         logger.info("Buscando todos os Clientes!");
-        return repository.findAll();
+        return ObjectMapperUtils.mapAll(repository.findAll(), ClienteDTO.class);
     }
 
 
-    public Cliente create(Cliente cliente) {
+    public ClienteDTO create(ClienteDTO dto) {
         logger.info("Criando um cliente");
 
+        var entity = repository.save(ObjectMapperUtils.map(dto, Cliente.class));
 
-        var entity = repository.save(cliente);
-
-        if (cliente.getEnderecos() != null && !cliente.getEnderecos().isEmpty()) {
-            List<Endereco> enderecos = cliente.getEnderecos();
+        if (dto.getEnderecos() != null && !dto.getEnderecos().isEmpty()) {
+            List<Endereco> enderecos = ObjectMapperUtils.mapAll(dto.getEnderecos(), Endereco.class);
             enderecos.forEach(endereco -> endereco.setCliente(entity));
-            adressRepository.saveAll(enderecos);
+            entity.setEnderecos(adressRepository.saveAll(enderecos));
         }
-
-        return entity;
-
+        return ObjectMapperUtils.map(entity, ClienteDTO.class);
     }
 
 
-    public Cliente update(Cliente cliente) {
+    public ClienteDTO update(ClienteDTO dto) {
         logger.info("Atualizando o clinte");
 
-        var entity = repository.findById(cliente.getId()).orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
+        var entity = repository.findById(dto.getId()).orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
 
-        updateValues(cliente, entity);
+        var updatedEntity = ObjectMapperUtils.map(dto, Cliente.class);
 
-        return repository.save(entity);
+        updateClienteValues(updatedEntity, entity);
+
+        return ObjectMapperUtils.map(repository.save(updatedEntity), ClienteDTO.class);
 
     }
 
@@ -87,7 +93,7 @@ public class ClienteService {
 
     }
 
-    private static void updateValues(Cliente newValues, Cliente oldValues) {
+    private static void updateClienteValues(Cliente newValues, Cliente oldValues) {
         oldValues.setNome(newValues.getNome());
         oldValues.setSobreNome(newValues.getSobreNome());
         oldValues.setDataNascimento(newValues.getDataNascimento());

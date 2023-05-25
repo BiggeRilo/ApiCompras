@@ -1,6 +1,6 @@
 package atom.juice.apicompras.controllers;
 
-import atom.juice.apicompras.models.Endereco;
+import atom.juice.apicompras.data.vo.EnderecoDTO;
 import atom.juice.apicompras.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ public class EnderecoController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Endereco findById(@PathVariable(value = "id") Long id) {
+    public EnderecoDTO findById(@PathVariable(value = "id") Long id) {
         return service.findById(id);
     }
 

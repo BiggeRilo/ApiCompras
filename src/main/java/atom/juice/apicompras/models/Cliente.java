@@ -86,20 +86,25 @@ public class Cliente implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cliente cliente = (Cliente) o;
+
+        if (!id.equals(cliente.id)) return false;
+        if (!Objects.equals(nome, cliente.nome)) return false;
+        if (!Objects.equals(sobreNome, cliente.sobreNome)) return false;
+        if (!Objects.equals(rg, cliente.rg)) return false;
+        if (!Objects.equals(cpf, cliente.cpf)) return false;
+        if (!Objects.equals(cnpj, cliente.cnpj)) return false;
+        if (!Objects.equals(dataNascimento, cliente.dataNascimento))
             return false;
-        if (getClass() != obj.getClass())
+        if (!Objects.equals(enderecos, cliente.enderecos)) return false;
+        if (!Objects.equals(dataCriacao, cliente.dataCriacao)) return false;
+        if (!Objects.equals(dataUltimaModificacao, cliente.dataUltimaModificacao))
             return false;
-        Cliente other = (Cliente) obj;
-        return Objects.equals(cnpj, other.cnpj) && Objects.equals(cpf, other.cpf)
-                && Objects.equals(dataCriacao, other.dataCriacao)
-                && Objects.equals(dataNascimento, other.dataNascimento)
-                && Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao) && Objects.equals(id, other.id)
-                && Objects.equals(nome, other.nome) && Objects.equals(rg, other.rg)
-                && Objects.equals(sobreNome, other.sobreNome) && Objects.equals(statusDb, other.statusDb);
+        return Objects.equals(statusDb, cliente.statusDb);
     }
 
     public Long getId() {
