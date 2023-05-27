@@ -6,18 +6,25 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "CLIENTE")
-@DynamicInsert
+@Table(name = "Clientes",  schema="comprasdb")
 public class Cliente implements Serializable {
+
+    /**
+     * Generated serial UUID
+     */
+    @Serial
+    private static final long serialVersionUID = 2821647161928568849L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="cliente_id")
     private Long id;
 
     @Column(name = "nome", nullable = false)
@@ -54,7 +61,6 @@ public class Cliente implements Serializable {
     private Date dataUltimaModificacao;
 
     @Column(name = "status_db")
-    @ColumnDefault("false")
     private Boolean statusDb;
 
     public Cliente() {
@@ -73,16 +79,19 @@ public class Cliente implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Cliente [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", rg=" + rg + ", cpf=" + cpf
-                + ", cnpj=" + cnpj + ", dataNascimento=" + dataNascimento + ", dataCriacao=" + dataCriacao
-                + ", dataUltimaModificacao=" + dataUltimaModificacao + ", statusDb=" + statusDb + "]";
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(cnpj, cpf, dataCriacao, dataNascimento, dataUltimaModificacao, id, nome, rg, sobreNome,
-                statusDb);
+        int result = id.hashCode();
+        result = 31 * result + nome.hashCode();
+        result = 31 * result + sobreNome.hashCode();
+        result = 31 * result + (rg != null ? rg.hashCode() : 0);
+        result = 31 * result + (cpf != null ? cpf.hashCode() : 0);
+        result = 31 * result + (cnpj != null ? cnpj.hashCode() : 0);
+        result = 31 * result + dataNascimento.hashCode();
+        result = 31 * result + (enderecos != null ? enderecos.hashCode() : 0);
+        result = 31 * result + dataCriacao.hashCode();
+        result = 31 * result + dataUltimaModificacao.hashCode();
+        result = 31 * result + statusDb.hashCode();
+        return result;
     }
 
     @Override
@@ -105,6 +114,24 @@ public class Cliente implements Serializable {
         if (!Objects.equals(dataUltimaModificacao, cliente.dataUltimaModificacao))
             return false;
         return Objects.equals(statusDb, cliente.statusDb);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Cliente{");
+        sb.append("id=").append(id);
+        sb.append(", nome='").append(nome).append('\'');
+        sb.append(", sobreNome='").append(sobreNome).append('\'');
+        sb.append(", rg='").append(rg).append('\'');
+        sb.append(", cpf='").append(cpf).append('\'');
+        sb.append(", cnpj='").append(cnpj).append('\'');
+        sb.append(", dataNascimento=").append(dataNascimento);
+        sb.append(", enderecos=").append(enderecos);
+        sb.append(", dataCriacao=").append(dataCriacao);
+        sb.append(", dataUltimaModificacao=").append(dataUltimaModificacao);
+        sb.append(", statusDb=").append(statusDb);
+        sb.append('}');
+        return sb.toString();
     }
 
     public Long getId() {

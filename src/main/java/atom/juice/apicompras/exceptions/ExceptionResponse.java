@@ -1,5 +1,6 @@
 package atom.juice.apicompras.exceptions;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ public class ExceptionResponse implements Serializable {
 
 	/**
 	 * 
-	 */
+	 */@Serial
 	private static final long serialVersionUID = 1647510355986311720L;
 
 	private Date timestamp;

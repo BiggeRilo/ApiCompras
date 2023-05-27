@@ -10,5 +10,5 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
       - ./postgres-data:/var/lib/postgresql/data
+      - ./createdb.sql:/docker-entrypoint-initdb.d/createdb.sql

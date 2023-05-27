@@ -7,21 +7,23 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ENDERECO")
+@Table(name = "Enderecos",  schema="comprasdb")
 @DynamicInsert
 public class Endereco implements Serializable {
 
     /**
      * Generated serial UUID
-     */
+     */@Serial
     private static final long serialVersionUID = 6823588219082699682L;
 
     @Id
+    @Column(name="endereco_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -125,10 +127,20 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "Endereco [id=" + id + ", cliente=" + cliente + ", cep=" + cep + ", logradouro=" + logradouro
-                + ", numero=" + numero + ", estado=" + estado + ", cidade=" + cidade + ", complemento=" + complemento
-                + ", dataCriacao=" + dataCriacao + ", dataUltimaModificacao=" + dataUltimaModificacao + ", statusDb="
-                + statusDb + "]";
+        final StringBuffer sb = new StringBuffer("Endereco{");
+        sb.append("id=").append(id);
+        sb.append(", cliente=").append(cliente);
+        sb.append(", cep='").append(cep).append('\'');
+        sb.append(", logradouro='").append(logradouro).append('\'');
+        sb.append(", numero='").append(numero).append('\'');
+        sb.append(", estado='").append(estado).append('\'');
+        sb.append(", cidade='").append(cidade).append('\'');
+        sb.append(", complemento='").append(complemento).append('\'');
+        sb.append(", dataCriacao=").append(dataCriacao);
+        sb.append(", dataUltimaModificacao=").append(dataUltimaModificacao);
+        sb.append(", statusDb=").append(statusDb);
+        sb.append('}');
+        return sb.toString();
     }
 
     public Long getId() {

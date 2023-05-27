@@ -1,62 +1,47 @@
 package atom.juice.apicompras.data.dto;
 
-import atom.juice.apicompras.models.Cliente;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class EnderecoDTO extends RepresentationModel<EnderecoDTO> implements Serializable {
 
 
     private Long id;
 
-    @JsonProperty("CEP")
+
     private String cep;
-    @JsonProperty("Logradouro")
+
     private String logradouro;
-    @JsonProperty("Numero")
+
     private String numero;
-    @JsonProperty("Estado")
+
     private String estado;
-    @JsonProperty("Cidade")
+
     private String cidade;
-    @JsonProperty("Complemento")
+
     private String complemento;
 
     public EnderecoDTO() {
     }
 
-    public EnderecoDTO(Long id, Cliente cliente, String cep, String logradouro, String numero, String estado, String cidade, String complemento) {
-        this.id = id;
-        this.cep = cep;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.estado = estado;
-        this.cidade = cidade;
-        this.complemento = complemento;
-    }
-
-    public EnderecoDTO(Long id) {
-        this.id = id;
+    public EnderecoDTO(long i) {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof EnderecoDTO that)) return false;
         if (!super.equals(o)) return false;
 
-        EnderecoDTO that = (EnderecoDTO) o;
-
         if (!id.equals(that.id)) return false;
-        if (!Objects.equals(cep, that.cep)) return false;
-        if (!Objects.equals(logradouro, that.logradouro)) return false;
-        if (!Objects.equals(numero, that.numero)) return false;
-        if (!Objects.equals(estado, that.estado)) return false;
-        if (!Objects.equals(cidade, that.cidade)) return false;
-        return Objects.equals(complemento, that.complemento);
+        if (!cep.equals(that.cep)) return false;
+        if (!logradouro.equals(that.logradouro)) return false;
+        if (!numero.equals(that.numero)) return false;
+        if (!estado.equals(that.estado)) return false;
+        if (!cidade.equals(that.cidade)) return false;
+        return complemento.equals(that.complemento);
     }
 
     @Override
@@ -70,6 +55,20 @@ public class EnderecoDTO extends RepresentationModel<EnderecoDTO> implements Ser
         result = 31 * result + cidade.hashCode();
         result = 31 * result + complemento.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("EnderecoDTO{");
+        sb.append("id=").append(id);
+        sb.append(", cep='").append(cep).append('\'');
+        sb.append(", logradouro='").append(logradouro).append('\'');
+        sb.append(", numero='").append(numero).append('\'');
+        sb.append(", estado='").append(estado).append('\'');
+        sb.append(", cidade='").append(cidade).append('\'');
+        sb.append(", complemento='").append(complemento).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     public Long getId() {

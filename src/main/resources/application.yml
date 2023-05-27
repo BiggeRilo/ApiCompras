@@ -7,7 +7,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
@@ -17,7 +17,7 @@ spring:
             mode: ALL
     show-sql: true
   flyway:
-    url: jdbc:postgresql://localhost:5432/comprasdb
+    url: jdbc:postgresql://localhost:5432/comprasdb?useTimezone=true&serverTimezone=UTC
     schemas: comprasdb
     user: postgres
     password: postgres123

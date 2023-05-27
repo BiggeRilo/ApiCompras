@@ -1,34 +1,37 @@
 package atom.juice.apicompras.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
-
 @Entity
-@Table(name = "COMPRA_PRODUTO")
+@Table(name = "ItemCompra", schema="comprasdb")
 public class ItemCompra implements Serializable {
 
 	/**
-	 * 
+	 * Generated serial UUID
 	 */
+	@Serial
 	private static final long serialVersionUID = 2821647161928568083L;
 
 	@Id
+	@Column(name="item_compra_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "valor_total")
+	@Column(name = "valorTotal")
 	private Double valorTotal;
 
-	@Column(name = "valor_produto_unitario_criacao")
+	@Column(name = "valorProdutoUnitarioCriacao")
 	private Double valorProdutoUnitarioCriacao;
 
-	@Column(name = "quantidade_produto")
+	@Column(name = "quantidadeProduto")
 	private int quantidadeProduto;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -54,7 +57,6 @@ public class ItemCompra implements Serializable {
 	private Date dataUltimaModificacao;
 
 	@Column(name = "status_db", nullable = false)
-	@ColumnDefault("false")
 	private Boolean statusDb;
 
 	public ItemCompra() {
@@ -72,34 +74,49 @@ public class ItemCompra implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(compra, dataCriacao, dataUltimaModificacao, id, produto, quantidadeProduto, statusDb,
-				valorProdutoUnitarioCriacao, valorTotal);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof ItemCompra that)) return false;
+
+		if (quantidadeProduto != that.quantidadeProduto) return false;
+		if (!id.equals(that.id)) return false;
+		if (!valorTotal.equals(that.valorTotal)) return false;
+		if (!valorProdutoUnitarioCriacao.equals(that.valorProdutoUnitarioCriacao)) return false;
+		if (!produto.equals(that.produto)) return false;
+		if (!compra.equals(that.compra)) return false;
+		if (!dataCriacao.equals(that.dataCriacao)) return false;
+		if (!dataUltimaModificacao.equals(that.dataUltimaModificacao)) return false;
+		return statusDb.equals(that.statusDb);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ItemCompra other = (ItemCompra) obj;
-		return Objects.equals(compra, other.compra) && Objects.equals(dataCriacao, other.dataCriacao)
-				&& Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao) && Objects.equals(id, other.id)
-				&& Objects.equals(produto, other.produto) && quantidadeProduto == other.quantidadeProduto
-				&& Objects.equals(statusDb, other.statusDb)
-				&& Objects.equals(valorProdutoUnitarioCriacao, other.valorProdutoUnitarioCriacao)
-				&& Objects.equals(valorTotal, other.valorTotal);
+	public int hashCode() {
+		int result = id.hashCode();
+		result = 31 * result + valorTotal.hashCode();
+		result = 31 * result + valorProdutoUnitarioCriacao.hashCode();
+		result = 31 * result + quantidadeProduto;
+		result = 31 * result + produto.hashCode();
+		result = 31 * result + compra.hashCode();
+		result = 31 * result + dataCriacao.hashCode();
+		result = 31 * result + dataUltimaModificacao.hashCode();
+		result = 31 * result + statusDb.hashCode();
+		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "CompraProduto [id=" + id + ", valorTotal=" + valorTotal + ", valorProdutoUnitarioCriacao="
-				+ valorProdutoUnitarioCriacao + ", quantidadeProduto=" + quantidadeProduto + ", produto=" + produto
-				+ ", compra=" + compra + ", dataCriacao=" + dataCriacao + ", dataUltimaModificacao="
-				+ dataUltimaModificacao + ", statusDb=" + statusDb + "]";
+		final StringBuffer sb = new StringBuffer("ItemCompra{");
+		sb.append("id=").append(id);
+		sb.append(", valorTotal=").append(valorTotal);
+		sb.append(", valorProdutoUnitarioCriacao=").append(valorProdutoUnitarioCriacao);
+		sb.append(", quantidadeProduto=").append(quantidadeProduto);
+		sb.append(", produto=").append(produto);
+		sb.append(", compra=").append(compra);
+		sb.append(", dataCriacao=").append(dataCriacao);
+		sb.append(", dataUltimaModificacao=").append(dataUltimaModificacao);
+		sb.append(", statusDb=").append(statusDb);
+		sb.append('}');
+		return sb.toString();
 	}
 
 	public Long getId() {
