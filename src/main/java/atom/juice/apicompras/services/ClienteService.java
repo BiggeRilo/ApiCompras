@@ -8,17 +8,17 @@ import atom.juice.apicompras.models.Cliente;
 import atom.juice.apicompras.models.Endereco;
 import atom.juice.apicompras.repositories.ClienteRepository;
 import atom.juice.apicompras.repositories.EnderecoRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class ClienteService {
 
-    private final Logger logger = Logger.getLogger(ClienteService.class.getName());
-
+    private final Logger logger = LogManager.getLogger();
 
     private final ClienteRepository repository;
 

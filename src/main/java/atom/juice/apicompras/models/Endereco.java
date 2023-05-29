@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Enderecos",  schema="comprasdb")
+@Table(name = "endereco_cliente",  schema="comprasdb")
 @DynamicInsert
 public class Endereco implements Serializable {
 

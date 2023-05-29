@@ -6,7 +6,7 @@ CREATE TABLE comprasdb.Produtos (
                                     valor_unitario NUMERIC(10,2) NOT NULL,
                                     data_ultima_modificacao DATE NOT NULL,
                                     data_criacao DATE NOT NULL,
-                                    status_db BOOLEAN DEFAULT FALSE NOT NULL,
+                                    status_db BOOLEAN DEFAULT FALSE,
                                     CONSTRAINT produto_id PRIMARY KEY (produto_id)
 );
 
@@ -25,7 +25,7 @@ CREATE TABLE comprasdb.Clientes (
                                     cpf VARCHAR,
                                     data_criacao DATE NOT NULL,
                                     data_ultima_modificacao DATE NOT NULL,
-                                    status_db BOOLEAN DEFAULT FALSE NOT NULL,
+                                    status_db BOOLEAN DEFAULT FALSE,
                                     CONSTRAINT cliente_id PRIMARY KEY (cliente_id)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE comprasdb.Compras (
                                    data_abertura DATE NOT NULL,
                                    data_fechamento DATE,
                                    data_ultima_modificacao DATE NOT NULL,
-                                   status_db BOOLEAN DEFAULT FALSE NOT NULL,
+                                   status_db BOOLEAN DEFAULT FALSE,
                                    data_criacao DATE NOT NULL,
                                    cliente_id BIGINT NOT NULL,
                                    CONSTRAINT compra_id PRIMARY KEY (compra_id)
@@ -60,7 +60,7 @@ CREATE TABLE comprasdb.ItemCompra (
                                       quantidadeProduto INTEGER NOT NULL,
                                       data_ultima_modificacao DATE NOT NULL,
                                       data_criacao DATE NOT NULL,
-                                      status_db BOOLEAN DEFAULT FALSE NOT NULL,
+                                      status_db BOOLEAN DEFAULT FALSE,
                                       CONSTRAINT item_compra_id PRIMARY KEY (item_compra_id)
 );
 
@@ -74,12 +74,13 @@ CREATE TABLE comprasdb.Endereco_cliente (
                                             cidade VARCHAR NOT NULL,
                                             cliente_id BIGINT NOT NULL,
                                             cep VARCHAR NOT NULL,
+                                            logradouro VARCHAR ,
                                             complemento VARCHAR ,
                                             estado VARCHAR NOT NULL,
                                             numero VARCHAR NOT NULL,
                                             data_criacao DATE NOT NULL,
                                             data_ultima_modificacao DATE NOT NULL,
-                                            status_db BOOLEAN DEFAULT FALSE NOT NULL,
+                                            status_db BOOLEAN DEFAULT FALSE,
                                             CONSTRAINT endereco_id PRIMARY KEY (endereco_id)
 );
 

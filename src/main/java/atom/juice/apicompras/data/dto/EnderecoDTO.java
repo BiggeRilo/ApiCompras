@@ -26,7 +26,8 @@ public class EnderecoDTO extends RepresentationModel<EnderecoDTO> implements Ser
     public EnderecoDTO() {
     }
 
-    public EnderecoDTO(long i) {
+    public EnderecoDTO(long id) {
+        this.id = id;
     }
 
     @Override
