@@ -19,7 +19,7 @@ class ClienteServiceTest {
     void disable() {
         Cliente entity = inputObject.mockEntity();
         Assertions.assertFalse(entity.isStatusDb());
-        entity.setStatusDb(Boolean.TRUE);
+        entity.setAtivo(Boolean.TRUE);
         Assertions.assertTrue(entity.isStatusDb());
     }
 }

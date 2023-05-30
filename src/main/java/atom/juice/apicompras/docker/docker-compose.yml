@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    container_name: MainDatabase
+    container_name: comprasdb
     image: 'postgres:latest'
     restart: always
     env_file:

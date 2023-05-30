@@ -1,6 +1,6 @@
 package atom.juice.apicompras.services;
 
-import atom.juice.apicompras.data.dto.EnderecoDTO;
+import atom.juice.apicompras.data.dto.v1.EnderecoDTO;
 import atom.juice.apicompras.exceptions.ResourceNotFoundException;
 import atom.juice.apicompras.mapper.ObjectMapperUtils;
 import atom.juice.apicompras.repositories.EnderecoRepository;

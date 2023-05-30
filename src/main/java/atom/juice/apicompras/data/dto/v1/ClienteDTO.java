@@ -1,6 +1,5 @@
-package atom.juice.apicompras.data.dto;
+package atom.juice.apicompras.data.dto.v1;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
 

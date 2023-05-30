@@ -1,6 +1,6 @@
 package atom.juice.apicompras.controllers;
 
-import atom.juice.apicompras.data.dto.ClienteDTO;
+import atom.juice.apicompras.data.dto.v1.ClienteDTO;
 import atom.juice.apicompras.services.ClienteService;
 import atom.juice.apicompras.util.CustomMediaType;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,8 +28,7 @@ public class ClienteController {
     public ClienteController(ClienteService service) {
         this.service = service;
     }
-
-
+    
     @GetMapping(value = "/{id}", produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YML})
     @Operation(summary = "Busca um Cliente", description = "Busca um cliente recebendo o seu Id como parâmetro", tags = "Cliente",
             responses = {

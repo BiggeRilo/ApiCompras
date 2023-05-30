@@ -10,6 +10,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "Produtos", schema = "comprasdb")
@@ -29,11 +30,14 @@ public class Produto implements Serializable {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
+    @Column(name = "descricao_curta", nullable = false)
+    private String descricao_curta;
+
     @Column(name = "valor_unitario", nullable = false)
     private Double valorUnitario;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_criacao", nullable = false)
+    @Column(name = "data_criacao")
     @CreationTimestamp
     private Date dataCriacao;
 
@@ -42,60 +46,51 @@ public class Produto implements Serializable {
     @UpdateTimestamp
     private Date dataUltimaModificacao;
 
-    @Column(name = "status_db", nullable = false)
+    @Column(name = "ativo")
     @ColumnDefault("false")
-    private Boolean statusDb;
+    private Boolean ativo;
 
     public Produto() {
     }
 
-    public Produto(Long id, String descricao, Double valorUnitario, Date dataCriacao, Date dataUltimaModificacao,
-                   Boolean statusDb) {
-        this.id = id;
-        this.descricao = descricao;
-        this.valorUnitario = valorUnitario;
-        this.dataCriacao = dataCriacao;
-        this.dataUltimaModificacao = dataUltimaModificacao;
-        this.statusDb = statusDb;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Produto produto)) return false;
+
+        if (!id.equals(produto.id)) return false;
+        if (!descricao.equals(produto.descricao)) return false;
+        if (!descricao_curta.equals(produto.descricao_curta)) return false;
+        if (!valorUnitario.equals(produto.valorUnitario)) return false;
+        if (!Objects.equals(dataCriacao, produto.dataCriacao)) return false;
+        if (!Objects.equals(dataUltimaModificacao, produto.dataUltimaModificacao))
+            return false;
+        return Objects.equals(ativo, produto.ativo);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
         result = 31 * result + descricao.hashCode();
+        result = 31 * result + descricao_curta.hashCode();
         result = 31 * result + valorUnitario.hashCode();
-        result = 31 * result + dataCriacao.hashCode();
-        result = 31 * result + dataUltimaModificacao.hashCode();
-        result = 31 * result + statusDb.hashCode();
+        result = 31 * result + (dataCriacao != null ? dataCriacao.hashCode() : 0);
+        result = 31 * result + (dataUltimaModificacao != null ? dataUltimaModificacao.hashCode() : 0);
+        result = 31 * result + (ativo != null ? ativo.hashCode() : 0);
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Produto other = (Produto) obj;
-        return Objects.equals(dataCriacao, other.dataCriacao)
-                && Objects.equals(dataUltimaModificacao, other.dataUltimaModificacao)
-                && Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
-                && Objects.equals(statusDb, other.statusDb) && Objects.equals(valorUnitario, other.valorUnitario);
-    }
-
-    @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Produto{");
-        sb.append("id=").append(id);
-        sb.append(", descricao='").append(descricao).append('\'');
-        sb.append(", valorUnitario=").append(valorUnitario);
-        sb.append(", dataCriacao=").append(dataCriacao);
-        sb.append(", dataUltimaModificacao=").append(dataUltimaModificacao);
-        sb.append(", statusDb=").append(statusDb);
-        sb.append('}');
-        return sb.toString();
+        return new StringJoiner(", ", Produto.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("descricao='" + descricao + "'")
+                .add("descricao_curta='" + descricao_curta + "'")
+                .add("valorUnitario=" + valorUnitario)
+                .add("dataCriacao=" + dataCriacao)
+                .add("dataUltimaModificacao=" + dataUltimaModificacao)
+                .add("ativo=" + ativo)
+                .toString();
     }
 
     public Long getId() {
@@ -138,16 +133,23 @@ public class Produto implements Serializable {
         this.dataUltimaModificacao = dataUltimaModificacao;
     }
 
-    public Boolean isStatusDb() {
-        return statusDb;
+    public Boolean isAtivo() {
+        return ativo;
     }
 
-    public void setStatusDb(Boolean statusDb) {
-        this.statusDb = statusDb;
+    public void setAtivo(Boolean statusDb) {
+        this.ativo = statusDb;
     }
 
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
 
+    public String getDescricao_curta() {
+        return descricao_curta;
+    }
+
+    public void setDescricao_curta(String descricao_curta) {
+        this.descricao_curta = descricao_curta;
+    }
 }

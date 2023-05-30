@@ -1,6 +1,6 @@
 package atom.juice.apicompras.mapper;
 
-import atom.juice.apicompras.data.dto.ClienteDTO;
+import atom.juice.apicompras.data.dto.v1.ClienteDTO;
 import atom.juice.apicompras.mocks.MockCliente;
 import atom.juice.apicompras.models.Cliente;
 import org.junit.jupiter.api.Assertions;

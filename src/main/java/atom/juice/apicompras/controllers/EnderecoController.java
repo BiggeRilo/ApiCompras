@@ -1,6 +1,6 @@
 package atom.juice.apicompras.controllers;
 
-import atom.juice.apicompras.data.dto.EnderecoDTO;
+import atom.juice.apicompras.data.dto.v1.EnderecoDTO;
 import atom.juice.apicompras.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/endereco/v1")
 public class EnderecoController {
 
 

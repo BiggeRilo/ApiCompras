@@ -1,7 +1,7 @@
 package atom.juice.apicompras.mocks;
 
-import atom.juice.apicompras.data.dto.ClienteDTO;
-import atom.juice.apicompras.data.dto.EnderecoDTO;
+import atom.juice.apicompras.data.dto.v1.ClienteDTO;
+import atom.juice.apicompras.data.dto.v1.EnderecoDTO;
 import atom.juice.apicompras.models.Cliente;
 import atom.juice.apicompras.models.Endereco;
 

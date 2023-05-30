@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Clientes",  schema="comprasdb")
+@Table(name = "clientes", schema = "comprasdb")
 @DynamicInsert
 public class Cliente implements Serializable {
 
@@ -25,7 +25,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cliente_id")
+    @Column(name = "cliente_id")
     private Long id;
 
     @Column(name = "nome", nullable = false)
@@ -42,6 +42,9 @@ public class Cliente implements Serializable {
 
     @Column(name = "cnpj", length = 14, unique = true)
     private String cnpj;
+
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_nascimento", nullable = false)
@@ -62,80 +65,10 @@ public class Cliente implements Serializable {
     private Date dataUltimaModificacao;
 
 
-    @Column(name="status_db")
+    @Column(name = "ativo")
     @ColumnDefault("FALSE")
-    private Boolean statusDb;
+    private Boolean ativo;
 
-    public Cliente() {
-
-    }
-
-    public Cliente(Long id, String nome, String sobreNome, String rg, String cpf, String cnpj, Date dataNascimento) {
-        this.id = id;
-        this.nome = nome;
-        this.sobreNome = sobreNome;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.cnpj = cnpj;
-        this.dataNascimento = dataNascimento;
-        this.statusDb = Boolean.FALSE;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + nome.hashCode();
-        result = 31 * result + sobreNome.hashCode();
-        result = 31 * result + (rg != null ? rg.hashCode() : 0);
-        result = 31 * result + (cpf != null ? cpf.hashCode() : 0);
-        result = 31 * result + (cnpj != null ? cnpj.hashCode() : 0);
-        result = 31 * result + dataNascimento.hashCode();
-        result = 31 * result + (enderecos != null ? enderecos.hashCode() : 0);
-        result = 31 * result + dataCriacao.hashCode();
-        result = 31 * result + dataUltimaModificacao.hashCode();
-        result = 31 * result + statusDb.hashCode();
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Cliente cliente = (Cliente) o;
-
-        if (!id.equals(cliente.id)) return false;
-        if (!Objects.equals(nome, cliente.nome)) return false;
-        if (!Objects.equals(sobreNome, cliente.sobreNome)) return false;
-        if (!Objects.equals(rg, cliente.rg)) return false;
-        if (!Objects.equals(cpf, cliente.cpf)) return false;
-        if (!Objects.equals(cnpj, cliente.cnpj)) return false;
-        if (!Objects.equals(dataNascimento, cliente.dataNascimento))
-            return false;
-        if (!Objects.equals(enderecos, cliente.enderecos)) return false;
-        if (!Objects.equals(dataCriacao, cliente.dataCriacao)) return false;
-        if (!Objects.equals(dataUltimaModificacao, cliente.dataUltimaModificacao))
-            return false;
-        return Objects.equals(statusDb, cliente.statusDb);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Cliente{");
-        sb.append("id=").append(id);
-        sb.append(", nome='").append(nome).append('\'');
-        sb.append(", sobreNome='").append(sobreNome).append('\'');
-        sb.append(", rg='").append(rg).append('\'');
-        sb.append(", cpf='").append(cpf).append('\'');
-        sb.append(", cnpj='").append(cnpj).append('\'');
-        sb.append(", dataNascimento=").append(dataNascimento);
-        sb.append(", enderecos=").append(enderecos);
-        sb.append(", dataCriacao=").append(dataCriacao);
-        sb.append(", dataUltimaModificacao=").append(dataUltimaModificacao);
-        sb.append(", statusDb=").append(statusDb);
-        sb.append('}');
-        return sb.toString();
-    }
 
     public Long getId() {
         return id;
@@ -210,11 +143,11 @@ public class Cliente implements Serializable {
     }
 
     public Boolean isStatusDb() {
-        return statusDb;
+        return ativo;
     }
 
-    public void setStatusDb(Boolean statusDb) {
-        this.statusDb = statusDb;
+    public void setAtivo(Boolean statusDb) {
+        this.ativo = statusDb;
     }
 
     public List<Endereco> getEnderecos() {
