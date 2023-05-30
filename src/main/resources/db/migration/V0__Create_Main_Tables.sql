@@ -221,7 +221,8 @@ CREATE SEQUENCE comprasdb.item_compra_id_seq;
 CREATE TABLE comprasdb.itemCompra (
                                       item_compra_id BIGINT NOT NULL DEFAULT nextval('comprasdb.item_compra_id_seq'),
                                       produto_id BIGINT NOT NULL,
-                                      compra_id BIGINT NOT NULL,                              
+                                      compra_id BIGINT NOT NULL,
+                                      valorTotal NUMERIC(10,2) NOT NULL,
                                       valorProdutoUnitarioCriacao NUMERIC(10,2) NOT NULL,
                                       quantidadeProduto INTEGER NOT NULL,
                                       ativo BOOLEAN DEFAULT FALSE,

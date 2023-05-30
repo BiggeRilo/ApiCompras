@@ -64,7 +64,6 @@ public class Cliente implements Serializable {
     @UpdateTimestamp
     private Date dataUltimaModificacao;
 
-
     @Column(name = "ativo")
     @ColumnDefault("FALSE")
     private Boolean ativo;

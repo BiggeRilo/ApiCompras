@@ -1,7 +1,6 @@
 package atom.juice.apicompras.models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 import java.util.StringJoiner;
 
 @Entity
@@ -36,19 +36,34 @@ public class Produto implements Serializable {
     @Column(name = "valor_unitario", nullable = false)
     private Double valorUnitario;
 
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "categoria_produto", joinColumns = {@JoinColumn(name = "produto_id")},
+            inverseJoinColumns = {@JoinColumn(name = "categoria_id")})
+    private Set<Categoria> categorias;
+
+
+    @Column(name = "ativo", nullable = true)
+    private Boolean ativo;
+
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_criacao")
     @CreationTimestamp
+    @Column(name = "data_criacao", nullable = false)
     private Date dataCriacao;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_ultima_modificacao")
     @UpdateTimestamp
+    @Column(name = "data_ultima_modificacao", nullable = false)
     private Date dataUltimaModificacao;
 
-    @Column(name = "ativo")
-    @ColumnDefault("false")
-    private Boolean ativo;
+    @Column(name = "usuario_criacao", nullable = true)
+    private Long usuarioCriacao;
+
+    @Column(name = "usuario_atualizacao", nullable = true)
+    private Long usuarioAtualizacao;
 
     public Produto() {
     }
