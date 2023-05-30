@@ -21,6 +21,7 @@ spring:
     schemas: comprasdb
     user: postgres
     password: postgres123
+    baseline-on-migrate: true
   jackson:
     time-zone: GMT-3
     date-format: yyyy-MM-dd HH:mm:ss

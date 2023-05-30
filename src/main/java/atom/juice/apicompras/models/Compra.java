@@ -13,6 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Compras", schema="comprasdb")
+@DynamicInsert
 public class Compra implements Serializable {
 
 	/**
@@ -57,7 +58,8 @@ public class Compra implements Serializable {
 	@UpdateTimestamp
 	private Date dataUltimaModificacao;
 
-	@Column(name = "status_db", nullable = false)
+	@Column(name = "status_db")
+	@ColumnDefault("FALSE")
 	private Boolean statusDb;
 
 	public Compra() {

@@ -1,15 +1,16 @@
 package atom.juice.apicompras.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 
+@JsonPropertyOrder({"id", "cep", "logradouro","numero", "estado","cidade","complemento"})
 public class EnderecoDTO extends RepresentationModel<EnderecoDTO> implements Serializable {
 
 
     private Long id;
-
 
     private String cep;
 

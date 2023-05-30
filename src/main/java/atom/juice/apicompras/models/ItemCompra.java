@@ -2,16 +2,15 @@ package atom.juice.apicompras.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 @Entity
 @Table(name = "ItemCompra", schema="comprasdb")
+@DynamicInsert
 public class ItemCompra implements Serializable {
 
 	/**
@@ -56,7 +55,8 @@ public class ItemCompra implements Serializable {
 	@UpdateTimestamp
 	private Date dataUltimaModificacao;
 
-	@Column(name = "status_db", nullable = false)
+	@Column(name = "status_db")
+	@ColumnDefault("FALSE")
 	private Boolean statusDb;
 
 	public ItemCompra() {

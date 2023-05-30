@@ -1,6 +1,7 @@
 package atom.juice.apicompras.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
@@ -8,29 +9,29 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@JsonPropertyOrder({"id","nome","sobreNome", "rg", "cpf","cnpj","dataNascimento", "enderecos"})
 public class ClienteDTO extends RepresentationModel<ClienteDTO> implements Serializable {
 
-    @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("nome")
+
     private String nome;
 
-    @JsonProperty("sobrenome")
+
     private String sobreNome;
 
-    @JsonProperty("rg")
+
     private String rg;
 
-    @JsonProperty("cpf")
+
     private String cpf;
 
-    @JsonProperty("cnpj")
+
     private String cnpj;
 
-    @JsonProperty("enderecos")
+
     private List<EnderecoDTO> enderecos;
-    @JsonProperty("dataNascimento")
+
     private Date dataNascimento;
 
 

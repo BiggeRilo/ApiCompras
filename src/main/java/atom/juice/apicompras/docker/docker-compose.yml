@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    container_name: comprasdb
+    container_name: MainDatabase
     image: 'postgres:latest'
     restart: always
     env_file:
@@ -11,4 +11,5 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-      - ./createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
+      - ./sql/01_CreateSchema.sql:/docker-entrypoint-initdb.d/01_CreateSchema.sql
+      - ./sql/02_InitLogback.sql:/docker-entrypoint-initdb.d/02_InitLogback.sql

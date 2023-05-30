@@ -3,6 +3,7 @@ package atom.juice.apicompras.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Produtos", schema = "comprasdb")
+@DynamicInsert
 public class Produto implements Serializable {
 
     /**

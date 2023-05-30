@@ -1,6 +1,7 @@
 package atom.juice.apicompras.services;
 
 
+import atom.juice.apicompras.controllers.ClienteController;
 import atom.juice.apicompras.data.dto.ClienteDTO;
 import atom.juice.apicompras.exceptions.ResourceNotFoundException;
 import atom.juice.apicompras.mapper.ObjectMapperUtils;
@@ -8,8 +9,13 @@ import atom.juice.apicompras.models.Cliente;
 import atom.juice.apicompras.models.Endereco;
 import atom.juice.apicompras.repositories.ClienteRepository;
 import atom.juice.apicompras.repositories.EnderecoRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +24,7 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    private final Logger logger = LogManager.getLogger();
-
+    private final Logger logger = LoggerFactory.getLogger(ClienteService.class.getName());
     private final ClienteRepository repository;
 
     private final EnderecoRepository adressRepository;
@@ -35,13 +40,22 @@ public class ClienteService {
         logger.info("Buscando um Cliente!");
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No resources found for this ID"));
 
-        return ObjectMapperUtils.map(entity, ClienteDTO.class);
+        var dto = ObjectMapperUtils.map(entity, ClienteDTO.class);
+
+        dto.add(linkTo(methodOn(ClienteController.class).findById(id)).withSelfRel());
+
+        return dto;
     }
 
     public List<ClienteDTO> findAll() {
 
         logger.info("Buscando todos os Clientes!");
-        return ObjectMapperUtils.mapAll(repository.findAll(), ClienteDTO.class);
+
+        var dtos = ObjectMapperUtils.mapAll(repository.findAll(), ClienteDTO.class);
+
+        dtos.forEach(c -> c.add(linkTo(methodOn(ClienteController.class).findById(c.getId())).withSelfRel()));
+
+        return dtos;
     }
 
 
@@ -55,7 +69,13 @@ public class ClienteService {
             enderecos.forEach(endereco -> endereco.setCliente(entity));
             entity.setEnderecos(adressRepository.saveAll(enderecos));
         }
-        return ObjectMapperUtils.map(entity, ClienteDTO.class);
+
+
+        var responseDTO = ObjectMapperUtils.map(entity, ClienteDTO.class);
+
+        responseDTO.add(linkTo(methodOn(ClienteController.class).findById(responseDTO.getId())).withSelfRel());
+
+        return responseDTO;
     }
 
 
@@ -68,8 +88,11 @@ public class ClienteService {
 
         updateClienteValues(updatedEntity, entity);
 
-        return ObjectMapperUtils.map(repository.save(updatedEntity), ClienteDTO.class);
+        var responseDTO = ObjectMapperUtils.map(repository.save(updatedEntity), ClienteDTO.class);
 
+        responseDTO.add(linkTo(methodOn(ClienteController.class).findById(responseDTO.getId())).withSelfRel());
+
+        return responseDTO;
     }
 
     public void delete(Long id) {
