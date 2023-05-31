@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration packagingData="true">
-    <springProperty scope="context" name="ApiCompras" source="atom.juice.apicompras"/>
+    <springProperty scope="context" name="ApiCompras" source="atom.juice.ses"/>
     <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
     <property name="HOME_LOG" value="logs/app-logback.log"/>
 
@@ -38,7 +38,7 @@
         <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
             <driverClass>org.postgresql.Driver</driverClass>
             <!-- SEMPRE ESPECIFICAR O SCHEMA DAS TABELAS DE LOGGING -->
-            <url>jdbc:postgresql://localhost:5432/comprasdb?currentSchema=compraslogging</url>
+            <url>jdbc:postgresql://localhost:5432/sesbase?currentSchema=seslogging</url>
             <user>postgres</user>
             <password>postgres123</password>
         </connectionSource>
@@ -50,7 +50,7 @@
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
             <dataSource class="com.zaxxer.hikari.HikariDataSource">
                 <!-- SEMPRE ESPECIFICAR O SCHEMA DAS TABELAS DE LOGGING -->
-                <jdbcUrl>jdbc:postgresql://localhost:5432/comprasdb?currentSchema=compraslogging</jdbcUrl>
+                <jdbcUrl>jdbc:postgresql://localhost:5432/sesbase?currentSchema=seslogging</jdbcUrl>
                 <username>postgres</username>
                 <password>postgres123</password>
             </dataSource>
@@ -76,7 +76,7 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 
-    <logger name="atom.juice.apicompras" level="DEBUG" additivity="false">
+    <logger name="atom.juice.ses" level="DEBUG" additivity="false">
         <!--
         <appender-ref ref="EMAIL"/>
         <appender-ref ref="DEFULT_DB"/>

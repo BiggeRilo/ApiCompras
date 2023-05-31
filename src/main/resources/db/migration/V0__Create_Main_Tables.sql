@@ -1,263 +1,265 @@
-CREATE SEQUENCE comprasdb.usuario_id_seq;
-
-CREATE TABLE comprasdb.usuarios (
-                                    usuario_id BIGINT NOT NULL DEFAULT nextval('comprasdb.usuario_id_seq'),
-                                    nome VARCHAR NOT NULL,
-                                    sobrenome VARCHAR NOT NULL,
-                                    email VARCHAR NOT NULL,
-                                    telefone VARCHAR,
-                                    celular VARCHAR,
-                                    data_nascimento DATE NOT NULL,
-                                    ativo BOOLEAN DEFAULT FALSE,
-                                    data_criacao DATE NOT NULL,
-                                    data_ultima_modificacao DATE NOT NULL,
-                                    usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                    usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                    CONSTRAINT usuario_id PRIMARY KEY (usuario_id)
+CREATE TABLE SESDB.product_discount
+(
+    product_discount_id SERIAL               NOT NULL,
+    description         VARCHAR(255)         NOT NULL,
+    code                VARCHAR(50)          NOT NULL,
+    discount            NUMERIC(10, 2)       NOT NULL,
+    active              BOOLEAN DEFAULT TRUE NOT NULL,
+    updated_at          TIMESTAMPTZ          NOT NULL,
+    created_at          TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT product_discount_id PRIMARY KEY (product_discount_id)
 );
 
 
-ALTER SEQUENCE comprasdb.usuario_id_seq OWNED BY comprasdb.usuarios.usuario_id;
-
-
-CREATE SEQUENCE comprasdb.categoria_id_seq;
-
-CREATE TABLE comprasdb.categoria (
-                                     categoria_id BIGINT NOT NULL DEFAULT nextval('comprasdb.categoria_id_seq'),
-                                     nome_categoria VARCHAR NOT NULL,
-                                     descricao VARCHAR,
-                                     codigo VARCHAR NOT NULL,
-                                     ativo BOOLEAN DEFAULT FALSE,
-                                     data_criacao DATE NOT NULL,
-                                     data_ultima_modificacao DATE NOT NULL,
-                                     usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                     usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                     CONSTRAINT categoria_id PRIMARY KEY (categoria_id)
+CREATE TABLE SESDB.cupom
+(
+    cupom_id    SERIAL               NOT NULL,
+    code        VARCHAR(50)          NOT NULL,
+    description VARCHAR(255)         NOT NULL,
+    discount    NUMERIC(10, 2)       NOT NULL,
+    created_at  TIMESTAMPTZ          NOT NULL,
+    active      BOOLEAN DEFAULT TRUE NOT NULL,
+    updated_at  TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT cupom_id PRIMARY KEY (cupom_id)
 );
 
 
-ALTER SEQUENCE comprasdb.categoria_id_seq OWNED BY comprasdb.categoria.categoria_id;
-
-CREATE SEQUENCE comprasdb.perfil_id_seq;
-
-CREATE TABLE comprasdb.perfil (
-                                  perfil_id BIGINT NOT NULL DEFAULT nextval('comprasdb.perfil_id_seq'),
-                                  codigo VARCHAR NOT NULL,
-                                  descricao VARCHAR,
-                                  permissoes VARCHAR NOT NULL,
-                                  ativo BOOLEAN DEFAULT FALSE,
-                                  data_criacao DATE NOT NULL,
-                                  data_ultima_modificacao DATE NOT NULL,
-                                  usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                  usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                  CONSTRAINT perfil_id PRIMARY KEY (perfil_id)
+CREATE TABLE SESDB.product_iventory
+(
+    product_iventory BIGSERIAL            NOT NULL,
+    quantity         INTEGER              NOT NULL,
+    created_at       TIMESTAMPTZ          NOT NULL,
+    active           BOOLEAN DEFAULT TRUE NOT NULL,
+    updated_at       TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT product_iventory_id PRIMARY KEY (product_iventory)
 );
 
 
-ALTER SEQUENCE comprasdb.perfil_id_seq OWNED BY comprasdb.perfil.perfil_id;
-
-CREATE SEQUENCE comprasdb.usuario_perfil_id_seq;
-
-CREATE TABLE comprasdb.usuario_perfil (
-                                          usuario_perfil_id BIGINT NOT NULL DEFAULT nextval('comprasdb.usuario_perfil_id_seq'),
-                                          usuario_id BIGINT NOT NULL,
-                                          perfil_id BIGINT NOT NULL,
-                                          CONSTRAINT usuario_perfil_id PRIMARY KEY (usuario_perfil_id)
+CREATE TABLE SESDB.product_category
+(
+    product_category_id BIGSERIAL            NOT NULL,
+    created_at          TIMESTAMPTZ          NOT NULL,
+    active              BOOLEAN DEFAULT TRUE NOT NULL,
+    updated_at          TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT product_category_id PRIMARY KEY (product_category_id)
 );
 
 
-ALTER SEQUENCE comprasdb.usuario_perfil_id_seq OWNED BY comprasdb.usuario_perfil.usuario_perfil_id;
-
-CREATE SEQUENCE comprasdb.paises_id_seq;
-
-CREATE TABLE comprasdb.paises (
-                                  pais_id BIGINT NOT NULL DEFAULT nextval('comprasdb.paises_id_seq'),
-                                  iso VARCHAR(2) NOT NULL,
-                                  iso3 VARCHAR(3) NOT NULL,
-                                  tel_codigo INTEGER NOT NULL,
-                                  num_codigo SMALLINT DEFAULT NULL,
-                                  nome_maiusculo VARCHAR(80) NOT NULL,
-                                  nome VARCHAR(80) NOT NULL,
-                                  ativo BOOLEAN DEFAULT FALSE,
-                                  data_criacao DATE NOT NULL,
-                                  usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                  usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                  data_ultima_modificacao DATE NOT NULL,
-                                  CONSTRAINT pais_id PRIMARY KEY (pais_id)
+CREATE TABLE SESDB.order_payment_status
+(
+    order_payment_status_id SERIAL               NOT NULL,
+    code                    VARCHAR(50)          NOT NULL,
+    active                  BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at              TIMESTAMPTZ          NOT NULL,
+    description             VARCHAR(255)         NOT NULL,
+    updated_at              TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT order_payment_status_id PRIMARY KEY (order_payment_status_id)
 );
 
 
-ALTER SEQUENCE comprasdb.paises_id_seq OWNED BY comprasdb.paises.pais_id;
-
-CREATE SEQUENCE comprasdb.status_compra_id_seq;
-
-CREATE TABLE comprasdb.status_compra (
-                                         status_compra_id BIGINT NOT NULL DEFAULT nextval('comprasdb.status_compra_id_seq'),
-                                         descricao VARCHAR,
-                                         codigo VARCHAR NOT NULL,
-                                         ativo BOOLEAN DEFAULT FALSE,
-                                         data_criacao DATE NOT NULL,
-                                         data_ultima_modificacao DATE NOT NULL,
-                                         usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                         usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                         CONSTRAINT status_compra_id PRIMARY KEY (status_compra_id)
+CREATE TABLE SESDB.order_status
+(
+    order_status_id SERIAL               NOT NULL,
+    description     VARCHAR(255)         NOT NULL,
+    code            VARCHAR(50)          NOT NULL,
+    created_at      TIMESTAMPTZ          NOT NULL,
+    updated_at      TIMESTAMPTZ          NOT NULL,
+    active          BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT order_status_id PRIMARY KEY (order_status_id)
 );
 
 
-ALTER SEQUENCE comprasdb.status_compra_id_seq OWNED BY comprasdb.status_compra.status_compra_id;
-
-CREATE SEQUENCE comprasdb.tipo_endereco_id_seq;
-
-CREATE TABLE comprasdb.tipo_endereco (
-                                         tipo_endereco_id BIGINT NOT NULL DEFAULT nextval('comprasdb.tipo_endereco_id_seq'),
-                                         codigo VARCHAR NOT NULL,
-                                         descricao VARCHAR,
-                                         ativo BOOLEAN DEFAULT FALSE,
-                                         data_criacao DATE NOT NULL,
-                                         data_ultima_modificacao DATE NOT NULL,
-                                         usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                         usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                         CONSTRAINT tipo_endereco_id PRIMARY KEY (tipo_endereco_id)
+CREATE TABLE SESDB.order_payment_details
+(
+    order_payment_details_id BIGSERIAL            NOT NULL,
+    code                     VARCHAR(50)          NOT NULL,
+    provider                 VARCHAR(255)         NOT NULL,
+    amount                   INTEGER              NOT NULL,
+    order_payment_status_id  BIGINT               NOT NULL,
+    active                   BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at               TIMESTAMPTZ          NOT NULL,
+    description              VARCHAR(255)         NOT NULL,
+    updated_at               TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT order_payment_id PRIMARY KEY (order_payment_details_id)
 );
 
 
-ALTER SEQUENCE comprasdb.tipo_endereco_id_seq OWNED BY comprasdb.tipo_endereco.tipo_endereco_id;
-
-CREATE SEQUENCE comprasdb.tipo_cliente_id_seq;
-
-CREATE TABLE comprasdb.tipo_cliente (
-                                        tipo_cliente_id BIGINT NOT NULL DEFAULT nextval('comprasdb.tipo_cliente_id_seq'),
-                                        descricao VARCHAR,
-                                        codigo VARCHAR NOT NULL,
-                                        ativo BOOLEAN DEFAULT FALSE,
-                                        data_ultima_modificacao DATE NOT NULL,
-                                        data_criacao DATE NOT NULL,
-                                        usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                        usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                        CONSTRAINT tipo_cliente_id PRIMARY KEY (tipo_cliente_id)
+CREATE TABLE SESDB.product
+(
+    product_id          BIGSERIAL            NOT NULL,
+    product_category_id BIGINT               NOT NULL,
+    product_iventory    BIGINT               NOT NULL,
+    product_discount_id BIGINT               NOT NULL,
+    SKU                 VARCHAR(50)          NOT NULL,
+    code                VARCHAR(50)          NOT NULL,
+    name                VARCHAR(255)         NOT NULL,
+    description         VARCHAR(255)         NOT NULL,
+    price               NUMERIC(10, 2)       NOT NULL,
+    created_at          TIMESTAMPTZ          NOT NULL,
+    updated_at          TIMESTAMPTZ          NOT NULL,
+    active              BOOLEAN DEFAULT TRUE NOT NULL,
+    deleted_at          TIMESTAMPTZ,
+    CONSTRAINT product_id PRIMARY KEY (product_id)
 );
 
 
-ALTER SEQUENCE comprasdb.tipo_cliente_id_seq OWNED BY comprasdb.tipo_cliente.tipo_cliente_id;
-
-CREATE SEQUENCE comprasdb.produto_id_seq;
-
-CREATE TABLE comprasdb.produtos (
-                                    produto_id BIGINT NOT NULL DEFAULT nextval('comprasdb.produto_id_seq'),
-                                    descricao VARCHAR,
-                                    descricao_curta VARCHAR,
-                                    valor_unitario NUMERIC(10,2) NOT NULL,
-                                    ativo BOOLEAN DEFAULT FALSE,
-                                    data_criacao DATE NOT NULL,
-                                    data_ultima_modificacao DATE NOT NULL,
-                                    usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                    usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                    CONSTRAINT produto_id PRIMARY KEY (produto_id)
+CREATE TABLE SESDB.adress_type
+(
+    adress_type_id SERIAL               NOT NULL,
+    code           VARCHAR(50)          NOT NULL,
+    active         BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at     TIMESTAMPTZ          NOT NULL,
+    description    VARCHAR(255)         NOT NULL,
+    updated_at     TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT adress_type_id PRIMARY KEY (adress_type_id)
 );
 
 
-ALTER SEQUENCE comprasdb.produto_id_seq OWNED BY comprasdb.produtos.produto_id;
-
-CREATE SEQUENCE comprasdb.categoria_produto_id_seq;
-
-CREATE TABLE comprasdb.categoria_produto (
-                                             categoria_produto_id BIGINT NOT NULL DEFAULT nextval('comprasdb.categoria_produto_id_seq'),
-                                             categoria_id BIGINT NOT NULL,
-                                             produto_id BIGINT NOT NULL,
-                                             CONSTRAINT categoria_produto_id PRIMARY KEY (categoria_produto_id)
+CREATE TABLE SESDB.country
+(
+    country_id   SERIAL       NOT NULL,
+    country_name VARCHAR(255) NOT NULL,
+    iso          VARCHAR(2)   NOT NULL,
+    iso3         VARCHAR(3)   NOT NULL,
+    CONSTRAINT country_id PRIMARY KEY (country_id)
 );
 
 
-ALTER SEQUENCE comprasdb.categoria_produto_id_seq OWNED BY comprasdb.categoria_produto.categoria_produto_id;
-
-CREATE SEQUENCE comprasdb.cliente_id_seq;
-
-CREATE TABLE comprasdb.clientes (
-                                    cliente_id BIGINT NOT NULL DEFAULT nextval('comprasdb.cliente_id_seq'),
-                                    tipo_cliente_id BIGINT NOT NULL,
-                                    email VARCHAR NOT NULL,
-                                    telefone VARCHAR,
-                                    celular VARCHAR,
-                                    nome VARCHAR NOT NULL,
-                                    sobrenome VARCHAR NOT NULL,
-                                    data_nascimento DATE NOT NULL,
-                                    rg VARCHAR,
-                                    cnpj VARCHAR,
-                                    cpf VARCHAR,
-                                    ativo BOOLEAN DEFAULT FALSE,
-                                    data_criacao DATE NOT NULL,
-                                    data_ultima_modificacao DATE NOT NULL,
-                                    usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                    usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                    CONSTRAINT cliente_id PRIMARY KEY (cliente_id)
+CREATE TABLE SESDB.payment_type
+(
+    payment_type_id SERIAL               NOT NULL,
+    description     VARCHAR(255)         NOT NULL,
+    code            VARCHAR(50)          NOT NULL,
+    updated_at      TIMESTAMPTZ          NOT NULL,
+    created_at      TIMESTAMPTZ          NOT NULL,
+    active          BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT payment_type_id PRIMARY KEY (payment_type_id)
 );
 
 
-ALTER SEQUENCE comprasdb.cliente_id_seq OWNED BY comprasdb.clientes.cliente_id;
-
-CREATE SEQUENCE comprasdb.compra_id_seq;
-
-CREATE TABLE comprasdb.compras (
-                                   compra_id BIGINT NOT NULL DEFAULT nextval('comprasdb.compra_id_seq'),
-                                   status_compra_id BIGINT NOT NULL,
-                                   cliente_id BIGINT NOT NULL,
-                                   valor_total NUMERIC(10,2) NOT NULL,
-                                   data_abertura DATE NOT NULL,
-                                   data_fechamento DATE ,
-                                   ativo BOOLEAN DEFAULT FALSE,
-                                   data_criacao DATE NOT NULL,
-                                   data_ultima_modificacao DATE NOT NULL,
-                                   usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                   usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                   CONSTRAINT compra_id PRIMARY KEY (compra_id)
+CREATE TABLE SESDB.payment
+(
+    payment_id      SERIAL               NOT NULL,
+    payment_type_id BIGINT               NOT NULL,
+    description     VARCHAR(255)         NOT NULL,
+    expiration_date DATE                 NOT NULL,
+    provider        VARCHAR(255)         NOT NULL,
+    account_number  INTEGER              NOT NULL,
+    created_at      TIMESTAMPTZ          NOT NULL,
+    updated_at      TIMESTAMPTZ          NOT NULL,
+    active          BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT payment_id PRIMARY KEY (payment_id)
 );
 
 
-ALTER SEQUENCE comprasdb.compra_id_seq OWNED BY comprasdb.compras.compra_id;
-
-CREATE SEQUENCE comprasdb.item_compra_id_seq;
-
-
-CREATE TABLE comprasdb.itemCompra (
-                                      item_compra_id BIGINT NOT NULL DEFAULT nextval('comprasdb.item_compra_id_seq'),
-                                      produto_id BIGINT NOT NULL,
-                                      compra_id BIGINT NOT NULL,
-                                      valorTotal NUMERIC(10,2) NOT NULL,
-                                      valorProdutoUnitarioCriacao NUMERIC(10,2) NOT NULL,
-                                      quantidadeProduto INTEGER NOT NULL,
-                                      ativo BOOLEAN DEFAULT FALSE,
-                                      data_criacao DATE NOT NULL,
-                                      data_ultima_modificacao DATE NOT NULL,
-                                      usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                      usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                      CONSTRAINT item_compra_id PRIMARY KEY (item_compra_id)
+CREATE TABLE SESDB.address
+(
+    address_id     BIGSERIAL            NOT NULL,
+    user_id        BIGINT               NOT NULL,
+    adress_type_id BIGINT               NOT NULL,
+    country_id     BIGINT               NOT NULL,
+    phone_number   VARCHAR(15),
+    city           VARCHAR(255)         NOT NULL,
+    state          VARCHAR(255)         NOT NULL,
+    street         VARCHAR(255)         NOT NULL,
+    zipcode        VARCHAR(255)         NOT NULL,
+    updated_at     TIMESTAMPTZ          NOT NULL,
+    created_at     TIMESTAMPTZ          NOT NULL,
+    active         BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT adress_id PRIMARY KEY (address_id)
 );
 
 
-ALTER SEQUENCE comprasdb.item_compra_id_seq OWNED BY comprasdb.itemCompra.item_compra_id;
-
-
-
-CREATE SEQUENCE comprasdb.cliente_endereco_id_seq;
-
-CREATE TABLE comprasdb.endereco_cliente (
-                                            endereco_id BIGINT NOT NULL DEFAULT nextval('comprasdb.cliente_endereco_id_seq'),
-                                            cliente_id BIGINT NOT NULL,
-                                            tipo_endereco_id BIGINT NOT NULL,
-                                            pais_id BIGINT NOT NULL,
-                                            cidade VARCHAR NOT NULL,
-                                            cep VARCHAR NOT NULL,
-                                            logradouro VARCHAR NOT NULL,
-                                            complemento VARCHAR NOT NULL,
-                                            estado VARCHAR NOT NULL,
-                                            numero VARCHAR NOT NULL,
-                                            ativo BOOLEAN DEFAULT FALSE,
-                                            data_criacao DATE NOT NULL,
-                                            data_ultima_modificacao DATE NOT NULL,
-                                            usuario_criacao BIGINT REFERENCES usuarios(usuario_id),
-                                            usuario_atualizacao BIGINT REFERENCES usuarios(usuario_id),
-                                            CONSTRAINT endereco_id PRIMARY KEY (endereco_id)
+CREATE TABLE SESDB.user
+(
+    user_id         BIGSERIAL            NOT NULL,
+    first_name      VARCHAR(50)          NOT NULL,
+    last_name       VARCHAR(50)          NOT NULL,
+    phone_number    VARCHAR(15)          NOT NULL,
+    celphone_number VARCHAR(15)          NOT NULL,
+    updated_at      TIMESTAMPTZ          NOT NULL,
+    created_at      TIMESTAMPTZ          NOT NULL,
+    active          BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT user_id PRIMARY KEY (user_id)
 );
 
 
-ALTER SEQUENCE comprasdb.cliente_endereco_id_seq OWNED BY comprasdb.endereco_cliente.endereco_id;
+CREATE TABLE SESDB.order
+(
+    order_id                 BIGSERIAL            NOT NULL,
+    cupom_id                 INTEGER              NOT NULL,
+    user_id                  BIGINT               NOT NULL,
+    order_payment_details_id BIGINT               NOT NULL,
+    order_status_id          INTEGER              NOT NULL,
+    total                    NUMERIC(10, 2)       NOT NULL,
+    updated_at               TIMESTAMPTZ          NOT NULL,
+    created_at               TIMESTAMPTZ          NOT NULL,
+    active                   BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT order_id PRIMARY KEY (order_id)
+);
+
+
+CREATE TABLE SESDB.order_item
+(
+    order_item_id BIGINT               NOT NULL,
+    product_id    BIGINT               NOT NULL,
+    order_id      BIGINT               NOT NULL,
+    quantity      INTEGER              NOT NULL,
+    created_at    TIMESTAMPTZ          NOT NULL,
+    updated_at    TIMESTAMPTZ          NOT NULL,
+    active        BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT order_item_id PRIMARY KEY (order_item_id)
+);
+
+
+CREATE TABLE SESDB.user_payment
+(
+    payment_id BIGINT NOT NULL,
+    user_id    BIGINT NOT NULL,
+    CONSTRAINT user_payment_id PRIMARY KEY (payment_id, user_id)
+);
+
+
+CREATE TABLE SESDB.shopping_session
+(
+    shopping_session_id BIGSERIAL            NOT NULL,
+    user_id             BIGINT               NOT NULL,
+    total               NUMERIC(15, 2)       NOT NULL,
+    created_at          TIMESTAMPTZ          NOT NULL,
+    updated_at          TIMESTAMPTZ          NOT NULL,
+    active              BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT shopping_session_id PRIMARY KEY (shopping_session_id)
+);
+
+
+CREATE TABLE SESDB.cart_item
+(
+    cart_item_id        BIGINT               NOT NULL,
+    shopping_session_id BIGINT               NOT NULL,
+    product_id          BIGINT               NOT NULL,
+    quantity            INTEGER              NOT NULL,
+    updated_at          TIMESTAMPTZ          NOT NULL,
+    created_at          TIMESTAMPTZ          NOT NULL,
+    active              BOOLEAN DEFAULT TRUE NOT NULL,
+    CONSTRAINT cart_item_id PRIMARY KEY (cart_item_id)
+);
+
+
+CREATE TABLE SESDB.roles
+(
+    roles_id    SERIAL               NOT NULL,
+    code        VARCHAR(50)          NOT NULL,
+    active      BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at  TIMESTAMP            NOT NULL,
+    description VARCHAR(255)         NOT NULL,
+    updated_at  TIMESTAMPTZ          NOT NULL,
+    CONSTRAINT roles_id PRIMARY KEY (roles_id)
+);
+
+
+CREATE TABLE SESDB.user_roles
+(
+    roles_id BIGINT NOT NULL,
+    user_id  BIGINT NOT NULL,
+    CONSTRAINT user_roles_id PRIMARY KEY (roles_id, user_id)
+);

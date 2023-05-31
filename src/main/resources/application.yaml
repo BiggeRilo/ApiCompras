@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/comprasdb?useTimezone=true&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/sesbase?useTimezone=true&serverTimezone=UTC
     username: postgres
     password: postgres123
   jpa:
@@ -17,8 +17,8 @@ spring:
             mode: ALL
     show-sql: true
   flyway:
-    url: jdbc:postgresql://localhost:5432/comprasdb?useTimezone=true&serverTimezone=UTC
-    schemas: comprasdb
+    url: jdbc:postgresql://localhost:5432/sesbase?useTimezone=true&serverTimezone=UTC
+    schemas: sesdb
     user: postgres
     password: postgres123
     baseline-on-migrate: true
